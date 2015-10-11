@@ -1,0 +1,5 @@
+#!/bin/bash
+# Pull up to date version from github
+
+cd project_1
+git pull origin master

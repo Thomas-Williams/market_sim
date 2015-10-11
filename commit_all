@@ -1,0 +1,12 @@
+#!/bin/bash
+# Commits Market project changes
+
+echo "Please enter a commit comment: "
+
+read commitComment
+
+cd project_1
+git add .
+git commit -m "$commitComment"
+git push
+
