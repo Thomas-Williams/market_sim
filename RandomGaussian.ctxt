@@ -1,0 +1,4 @@
+#BlueJ class context
+comment0.params=aMean\ aVariance
+comment0.target=double\ getGaussian(double,\ double)
+numComments=1
