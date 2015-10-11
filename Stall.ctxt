@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=t\ s\ d\ i
+comment0.target=Stall(java.lang.String,\ int,\ int,\ int)
+comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Stall\n
+comment1.params=l
+comment1.target=void\ addLines(int)
+comment1.text=\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\n\ \n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\ \n
+numComments=2

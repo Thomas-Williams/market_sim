@@ -9,47 +9,37 @@ import java.util.*;
 public class Customer {   
     private int customerID;
     private int arrivalTime;
+    private String currentStall;
     
     private final int BAKERYMEAN        = 37;
     private final int BAKERYSTDV        = 17;
-    private final int BAKERYTIME        = 29;
-    private final int BAKERYTIMESTDV    = 13;
     
     private final int BEVERAGEMEAN      = 43;
     private final int BEVERAGESTDV      = 11;
-    private final int BEVERAGETIME      = 19;
-    private final int BEVERAGTETIMESTDV = 7;
     
     private final int DAIRYMEAN         = 59;
     private final int DAIRYSTDV         = 19;
-    private final int DAIRYTIME         = 59;
-    private final int DAIRYTIMESTDV     = 23;
     
     private final int FRUITMEAN         = 47;
     private final int FRUITSTDV         = 13;
-    private final int FRUITTIME         = 83;
-    private final int FRUITTIMESTDV     = 31;
     
     private final int MEATMEAN          = 53;
     private final int MEATSTDV          = 13;
-    private final int MEATTIME          = 101;
-    private final int MEATTIMESTDV      = 41;
     
     private final int VEGETABLEMEAN     = 71;
     private final int VEGETABLESTDV     = 29;
-    private final int VEGETABLETIME     = 119;
-    private final int VEGETABLETIMESTDV = 29;
     
     RandomGaussian needGen = new RandomGaussian();
     ArrayList shoppingList = new ArrayList();
     ArrayList fullNeeds = new ArrayList();
     
-    public Customer(int ID)
+    public Customer(int ID, int t)
     {
         customerID = ID;
+        arrivalTime = t;
     }
     
-    public void listGen( ){
+    public void listGen(){
         if(needGen.getGaussian(BAKERYMEAN, BAKERYSTDV) > 50){
             shoppingList.add("Bakery");
             fullNeeds.add(true);
@@ -91,10 +81,27 @@ public class Customer {
         } else {
             fullNeeds.add(false);
         }
+    }
+    
+    public String moveStall(String stall)
+    {
+        currentStall = stall;
+        return currentStall;
+    }
+    
+//     public Stall findShortest()
+//     {
+//         
+//     }
+    
+    public String info()
+    {
+        String info =  "Customer: "           + customerID              + "\n";
+               info += "    Specific Needs: " + shoppingList.toString() + "\n";
+               info += "    Overall  Needs: " + fullNeeds.toString();
+               
+        System.out.println(info);
         
-        System.out.println("Customer: " + customerID);
-        System.out.println("    Specific Needs: " + shoppingList.toString());
-        
-        System.out.println("    Overall Needs: " + fullNeeds.toString());
+        return info;
     }
 }

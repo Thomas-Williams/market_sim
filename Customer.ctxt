@@ -1,6 +1,10 @@
 #BlueJ class context
-comment0.params=ID
-comment0.target=Customer(int)
+comment0.params=ID\ t
+comment0.target=Customer(int,\ int)
 comment1.params=
 comment1.target=void\ listGen()
-numComments=2
+comment2.params=stall
+comment2.target=java.lang.String\ moveStall(java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ info()
+numComments=4
