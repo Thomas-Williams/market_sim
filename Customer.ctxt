@@ -1,10 +1,14 @@
 #BlueJ class context
-comment0.params=ID\ t
-comment0.target=Customer(int,\ int)
-comment1.params=
-comment1.target=void\ listGen()
-comment2.params=stall
-comment2.target=java.lang.String\ moveStall(java.lang.String)
-comment3.params=
-comment3.target=java.lang.String\ info()
-numComments=4
+comment0.params=ID
+comment0.target=Customer(int)
+comment1.params=s
+comment1.target=void\ listGen(java.util.LinkedList)
+comment2.params=
+comment2.target=Line\ nextShortest()
+comment3.params=t
+comment3.target=void\ setServeTime(int)
+comment4.params=stall
+comment4.target=java.lang.String\ moveStall(java.lang.String)
+comment5.params=
+comment5.target=java.lang.String\ info()
+numComments=6

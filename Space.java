@@ -1,18 +1,19 @@
 
 /**
- * Write a description of class ProcessedCustomers here.
+ * Write a description of class Space here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ProcessedCustomers
+public class Space
 {
-    private int processed = 0;
+    // instance variables - replace the example below with your own
+    private int space = 750;
 
     /**
-     * Constructor for objects of class ProcessedCustomers
+     * Constructor for objects of class Space
      */
-    public ProcessedCustomers()
+    public Space()
     {
         
     }
@@ -23,9 +24,9 @@ public class ProcessedCustomers
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
-    public int addOne()
+    public int addStall()
     {
-        processed++;
-        return processed;
+        space = space - 15;
+        return space;
     }
 }

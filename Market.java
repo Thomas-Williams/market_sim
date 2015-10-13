@@ -8,9 +8,10 @@ import java.util.*;
  */
 public class Market
 {
-    LinkedList marketStalls = new LinkedList();
-    LinkedList marketCustomers = new LinkedList();
-    ProcessedCustomers satisfied = new ProcessedCustomers();
+    GlobalTime time                     = new GlobalTime();
+    LinkedList<Stall> marketStalls      = new LinkedList<Stall>();
+    LinkedList marketCustomers          = new LinkedList();
+    ProcessedCustomers satisfied        = new ProcessedCustomers();
     
     private final int ARRTIMEMEAN       = 61;
     private final int ARRTIMESTDV       = 31;
@@ -33,8 +34,7 @@ public class Market
     private final int VEGETABLETIME     = 119;
     private final int VEGETABLETIMESTDV = 29;
     
-    public int space = 750;
-    RandomGaussian arrivalTime = new RandomGaussian();
+    RandomGaussian arrivalTime          = new RandomGaussian();
     
     public static void main(String args[]){
         
@@ -42,17 +42,19 @@ public class Market
     
     public List FatherTime()
     {
-        int currentID = 0;
-        int lastArrival = 0;
-        int nextArrival = 0;
+        int currentID    = 0;
+        int lastArrival  = 0;
+        int nextArrival  = 0;
         int currentIndex = 0;
         nextArrival += arrivalTime.getGaussian(61, 31);
-        for(int time = 0; time < 1000; time++){
-            if(time == nextArrival){
+        while(time.getTime() < 1000){
+            if(time.getTime() == nextArrival){
                 marketCustomers.add(addCustomer(currentID, nextArrival));
                 currentID++;
                 nextArrival += arrivalTime.getGaussian(61, 31);
+                time.addTime();
             }
+            time.addTime();
         }
         
         return marketCustomers;
@@ -96,10 +98,10 @@ public class Market
     
     public Customer addCustomer(int ID, int t)
     {
-        Customer customer = new Customer(ID, t);
-        customer.listGen();
+        Customer customer = new Customer(ID);
+        customer.listGen(marketStalls);
         
-        customer.info();
+        //customer.info();
         return customer;
     }
     

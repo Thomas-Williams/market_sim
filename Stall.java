@@ -8,13 +8,14 @@ import java.util.*;
  */
 public class Stall
 {
-    private String type;
+    public String type;
     private int stallID;
     private int SERVETIMEMEAN;
     private int SERVETIMESTDV;
     
-    LinkedList lines = new LinkedList();
+    LinkedList<Line> lines = new LinkedList<Line>();
     LinkedList workers = new LinkedList();
+    RandomGaussian timeGen = new RandomGaussian();
     Register pos = new Register();
 
     /**
@@ -35,7 +36,7 @@ public class Stall
         Worker worker1 = new Worker();
         workers.add(worker1);
     }
-
+    
     /**
      * An example of a method - replace this comment with your own
      * 
@@ -52,5 +53,24 @@ public class Stall
         }
     }
     
+    public void customerArrives(Customer c)
+    {
+        findShortest().add(c);
+    }
     
+    public void serveTime(Customer c)
+    {
+        c.setServeTime((int) timeGen.getGaussian(SERVETIMEMEAN, SERVETIMESTDV));
+    }
+    
+    public Line findShortest()
+    {
+        Line shortestLine = lines.get(0);
+        for(int i = 1; i < lines.size(); i++){
+            if(lines.get(i).size() < shortestLine.size()){
+                shortestLine = lines.get(i);
+            }
+        }
+        return shortestLine;
+    }
 }

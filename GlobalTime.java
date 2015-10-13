@@ -1,18 +1,18 @@
 
 /**
- * Write a description of class ProcessedCustomers here.
+ * Write a description of class GlobalTime here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ProcessedCustomers
+public class GlobalTime
 {
-    private int processed = 0;
+    private int time = 0;
 
     /**
-     * Constructor for objects of class ProcessedCustomers
+     * Constructor for objects of class GlobalTime
      */
-    public ProcessedCustomers()
+    public GlobalTime()
     {
         
     }
@@ -23,9 +23,14 @@ public class ProcessedCustomers
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
-    public int addOne()
+    public int addTime()
     {
-        processed++;
-        return processed;
+        time++;
+        return time;
+    }
+    
+    public int getTime()
+    {
+        return time;
     }
 }
