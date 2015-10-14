@@ -130,6 +130,59 @@ public class Customer {
         return shortestLine;
     }
     
+    public void fulfillNeed(String n)
+    {
+        if(n == "bakery"){
+            shoppingList.remove("Bakery");
+            fullNeeds.set(0, false);
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).type == "bakery"){
+                    stallsToVisit.remove(i);
+                }
+            }
+        } else if( n == "beverage"){
+            shoppingList.remove("Beverage");
+            fullNeeds.set(1, false);
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).type == "beverage"){
+                    stallsToVisit.remove(i);
+                }
+            }
+        } else if( n == "dairy"){
+            shoppingList.remove("Dairy");
+            fullNeeds.set(2, false);
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).type == "dairy"){
+                    stallsToVisit.remove(i);
+                }
+            }
+        } else if( n == "fruit"){
+            shoppingList.remove("Fruit");
+            fullNeeds.set(3, false);
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).type == "fruit"){
+                    stallsToVisit.remove(i);
+                }
+            }
+        } else if( n == "meat"){
+            shoppingList.remove("Meat");
+            fullNeeds.set(4, false);
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).type == "meat"){
+                    stallsToVisit.remove(i);
+                }
+            }
+        } else if( n == "vegetables"){
+            shoppingList.remove("Vegetables");
+            fullNeeds.set(5, false);
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).type == "vegetables"){
+                    stallsToVisit.remove(i);
+                }
+            }
+        }
+    }
+    
     public void setServeTime(int t)
     {
         serveTime = t;

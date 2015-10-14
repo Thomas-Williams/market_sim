@@ -63,6 +63,11 @@ public class Stall
         c.setServeTime((int) timeGen.getGaussian(SERVETIMEMEAN, SERVETIMESTDV));
     }
     
+    public void serveCustomer(Line l)
+    {
+        l.get(0)
+    }
+    
     public Line findShortest()
     {
         Line shortestLine = lines.get(0);

@@ -96,7 +96,7 @@ public class Market
         return marketStalls;
     }
     
-    public Customer addCustomer(int ID, int t)
+    public Customer addCustomer(int ID)
     {
         Customer customer = new Customer(ID);
         customer.listGen(marketStalls);
