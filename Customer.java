@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Customer {   
     private int customerID;
-    private int serveTime;
+    public int serveTime;
     private String currentStall;
     
     private final int BAKERYMEAN    = 37;
@@ -130,6 +130,12 @@ public class Customer {
         return shortestLine;
     }
     
+    public void moveLines(Line l)
+    {
+        l.add(this);
+        l.remove(this);
+    }
+    
     public void fulfillNeed(String n)
     {
         if(n == "bakery"){
@@ -186,6 +192,11 @@ public class Customer {
     public void setServeTime(int t)
     {
         serveTime = t;
+    }
+    
+    public int getServeTime()
+    {
+        return serveTime;
     }
     
     public String moveStall(String stall)

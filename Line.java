@@ -7,13 +7,13 @@ import java.util.*;
  * @version (a version number or a date)
  */
 public class Line extends LinkedList {
-    LinkedList CustomerLine;
+    LinkedList<Customer> CustomerLine;
     
     /**
      * Constructor for objects of class LineQueue
      */
     public Line( ) {
         super();
-        CustomerLine = new LinkedList();
+        CustomerLine = new LinkedList<Customer>();
     }
 }

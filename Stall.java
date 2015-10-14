@@ -37,6 +37,29 @@ public class Stall
         workers.add(worker1);
     }
     
+    public LinkedList stallClock()
+    {
+        int nextDeparture  = 0;
+        int currentLine = 0;
+
+        for(int time = 0; ; time++){
+            if(lines.get(0).get(0).getServeTime() < lines.get(1).get(0).getServeTime()){
+                nextDeparture += lines.get(0).get(0).getServeTime();
+                currentLine = 0;
+            } else {
+                nextDeparture += lines.get(1).get(0).getServeTime();
+                currentLine = 1;
+            }
+            
+            if(time == nextDeparture){
+                serveCustomer(lines.get(currentLine).get(0));
+                lines.get(currentLine).remove(0);
+            }
+        }
+        
+        return lines;
+    }
+   
     /**
      * An example of a method - replace this comment with your own
      * 
@@ -63,9 +86,19 @@ public class Stall
         c.setServeTime((int) timeGen.getGaussian(SERVETIMEMEAN, SERVETIMESTDV));
     }
     
-    public void serveCustomer(Line l)
+    public void serveCustomer(Customer c)
     {
-        l.get(0)
+        Line currentLine;
+        for(int i = 0; i < lines.size(); i++){
+            currentLine = lines.get(i);
+            for(int j = 0; j < currentLine.size(); j++){
+                if(currentLine.get(j) == c){
+                    c.fulfillNeed(type);
+                    c.moveLines(c.nextShortest());
+                    currentLine.remove(c);
+                }
+            }
+        }
     }
     
     public Line findShortest()
