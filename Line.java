@@ -6,14 +6,15 @@ import java.util.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Line extends LinkedList {
-    LinkedList<Customer> CustomerLine;
+public class Line
+{
+    LinkedList<Customer> line;
     
     /**
      * Constructor for objects of class LineQueue
      */
-    public Line( ) {
+    public Line() {
         super();
-        CustomerLine = new LinkedList<Customer>();
+        line = new LinkedList<Customer>();
     }
 }

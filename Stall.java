@@ -13,10 +13,9 @@ public class Stall
     private int SERVETIMEMEAN;
     private int SERVETIMESTDV;
     
-    LinkedList<Line> lines = new LinkedList<Line>();
+    LinkedList<LinkedList> lines = new LinkedList<LinkedList>();
     LinkedList workers = new LinkedList();
     RandomGaussian timeGen = new RandomGaussian();
-    Register pos = new Register();
 
     /**
      * Constructor for objects of class Stall
@@ -28,7 +27,7 @@ public class Stall
         SERVETIMESTDV = d;
         stallID = i;
         
-        Line line = new Line();
+        LinkedList<Customer> line = new LinkedList<Customer>();
         lines.add(line);
         
         Worker worker0 = new Worker();
@@ -41,9 +40,11 @@ public class Stall
     {
         int nextDeparture  = 0;
         int currentLine = 0;
+        LinkedList tmpLine = lines.get(0);
+        Customer tmpCustomer = tmpLine.get(0);
 
         for(int time = 0; ; time++){
-            if(lines.get(0).get(0).getServeTime() < lines.get(1).get(0).getServeTime()){
+            if(tmpCustomer.getServeTime() < lines.get(1).get(0).getServeTime()){
                 nextDeparture += lines.get(0).get(0).getServeTime();
                 currentLine = 0;
             } else {
@@ -69,7 +70,7 @@ public class Stall
     public void addLines(int l)
     {
         for(int lineCount = 0; lineCount < l; lineCount++){
-            Line line = new Line();
+            Line<Customer> line = new Line<Customer>();
             Worker worker = new Worker();
             lines.add(line);
             workers.add(worker);
