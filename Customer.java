@@ -123,17 +123,26 @@ public class Customer {
     {
         Line shortestLine = stallsToVisit.get(0).findShortest();
         for(int i = 1; i < stallsToVisit.size(); i++){
-            if(stallsToVisit.get(i).findShortest().size() < shortestLine.size()){
+            if(stallsToVisit.get(i).findShortest().getLength() < shortestLine.getLength()){
                 shortestLine = stallsToVisit.get(i).findShortest();
             }
         }
         return shortestLine;
     }
     
+    public boolean listComplete()
+    {
+        if(stallsToVisit.get(0) == null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public void moveLines(Line l)
     {
-        l.add(this);
-        l.remove(this);
+        l.removeCustomer(this);
+        nextShortest().addCustomer(this);
     }
     
     public void fulfillNeed(String n)

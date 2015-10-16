@@ -13,7 +13,7 @@ public class Stall
     private int SERVETIMEMEAN;
     private int SERVETIMESTDV;
     
-    LinkedList<LinkedList> lines = new LinkedList<LinkedList>();
+    public LinkedList<Line> lines = new LinkedList<Line>();
     LinkedList workers = new LinkedList();
     RandomGaussian timeGen = new RandomGaussian();
 
@@ -27,7 +27,7 @@ public class Stall
         SERVETIMESTDV = d;
         stallID = i;
         
-        LinkedList<Customer> line = new LinkedList<Customer>();
+        Line line = new Line();
         lines.add(line);
         
         Worker worker0 = new Worker();
@@ -36,29 +36,31 @@ public class Stall
         workers.add(worker1);
     }
     
-    public LinkedList stallClock()
+    public void checkFront(int t)
     {
         int nextDeparture  = 0;
         int currentLine = 0;
-        LinkedList tmpLine = lines.get(0);
-        Customer tmpCustomer = tmpLine.get(0);
-
-        for(int time = 0; ; time++){
-            if(tmpCustomer.getServeTime() < lines.get(1).get(0).getServeTime()){
-                nextDeparture += lines.get(0).get(0).getServeTime();
-                currentLine = 0;
-            } else {
-                nextDeparture += lines.get(1).get(0).getServeTime();
-                currentLine = 1;
-            }
-            
-            if(time == nextDeparture){
-                serveCustomer(lines.get(currentLine).get(0));
-                lines.get(currentLine).remove(0);
-            }
+        
+        if(lines.get(0).emptyLine() == true){
+            ;
+        } else if(lines.get(1).emptyLine() == true){
+            ;
+        } else if(lines.get(0).getCustomer(0).getServeTime() < lines.get(1).getCustomer(0).getServeTime()){
+            nextDeparture += lines.get(0).getCustomer(0).getServeTime();
+            currentLine = 0;
+        } else {
+            nextDeparture += lines.get(1).getCustomer(0).getServeTime();
+            currentLine = 1;
         }
         
-        return lines;
+        
+        if(lines.get(0).emptyLine() == true){
+            ;
+        } else if(lines.get(1).emptyLine() == true){
+            ;
+        } else if(t == nextDeparture){
+            serveCustomer(lines.get(currentLine).getCustomer(0));
+        }
     }
    
     /**
@@ -70,7 +72,7 @@ public class Stall
     public void addLines(int l)
     {
         for(int lineCount = 0; lineCount < l; lineCount++){
-            Line<Customer> line = new Line<Customer>();
+            Line line = new Line();
             Worker worker = new Worker();
             lines.add(line);
             workers.add(worker);
@@ -79,7 +81,7 @@ public class Stall
     
     public void customerArrives(Customer c)
     {
-        findShortest().add(c);
+        findShortest().addCustomer(c);
     }
     
     public void serveTime(Customer c)
@@ -92,11 +94,11 @@ public class Stall
         Line currentLine;
         for(int i = 0; i < lines.size(); i++){
             currentLine = lines.get(i);
-            for(int j = 0; j < currentLine.size(); j++){
-                if(currentLine.get(j) == c){
+            for(int j = 0; j < currentLine.getLength(); j++){
+                if(currentLine.getCustomer(j) == c){
                     c.fulfillNeed(type);
                     c.moveLines(c.nextShortest());
-                    currentLine.remove(c);
+                    currentLine.removeCustomer(c);
                 }
             }
         }
@@ -106,7 +108,7 @@ public class Stall
     {
         Line shortestLine = lines.get(0);
         for(int i = 1; i < lines.size(); i++){
-            if(lines.get(i).size() < shortestLine.size()){
+            if(lines.get(i).getLength() < shortestLine.getLength()){
                 shortestLine = lines.get(i);
             }
         }

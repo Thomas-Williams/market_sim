@@ -46,51 +46,62 @@ public class Market
         int lastArrival  = 0;
         int nextArrival  = 0;
         int currentIndex = 0;
+        addAll(1, 1, 1, 1, 1, 1, 1);
         nextArrival += arrivalTime.getGaussian(61, 31);
         while(time.getTime() < 1000){
             if(time.getTime() == nextArrival){
-                marketCustomers.add(addCustomer(currentID, nextArrival));
+                Customer customer = new Customer(currentID);
+                marketCustomers.add(customer);
                 currentID++;
                 nextArrival += arrivalTime.getGaussian(61, 31);
                 time.addTime();
             }
+            
+            
+            for(int i = 0; i < marketStalls.size(); i++){
+                marketStalls.get(i).checkFront(time.getTime());
+                for(int j = 0; j < marketStalls.get(i).lines.size(); j++){
+                    for(int k = 0; k < marketStalls.get(j).lines.size(); k++){
+                        if(marketStalls.get(i).lines.get(j).getCustomer(k).listComplete()
+                        if(marketStalls.get(i).lines.get(j).getCustomer(k).listComplete() == true){
+                            satisfied.addOne();
+                            marketStalls.get(i).lines.get(j).removeCustomer(marketStalls.get(i).lines.get(j).getCustomer(k));
+                        }
+                    }
+                }
+            }
+            
+            
             time.addTime();
         }
         
         return marketCustomers;
     }
     
-    public List addAll(int bake, int bev, int dairy, int fruit, int meat, int vegi)
+    public List addAll(int bake, int bev, int dairy, int fruit, int meat, int vegi, int stalls)
     {
-        int stallCount = 1;
         for( int i = 0; i < bake; i++){
-            marketStalls.add(addStall("bakery", BAKERYTIME, BAKERYTIMESTDV, stallCount));
-            stallCount++;
+            marketStalls.add(addStall("bakery", BAKERYTIME, BAKERYTIMESTDV, stalls));
         }
         
         for( int i = 0; i < bev; i++){
-            marketStalls.add(addStall("beverage", BEVERAGETIME, BEVERAGTETIMESTDV, stallCount));
-            stallCount++;
+            marketStalls.add(addStall("beverage", BEVERAGETIME, BEVERAGTETIMESTDV, stalls));
         }
         
         for( int i = 0; i < bake; i++){
-            marketStalls.add(addStall("dairy", DAIRYTIME, DAIRYTIMESTDV, stallCount));
-            stallCount++;
+            marketStalls.add(addStall("dairy", DAIRYTIME, DAIRYTIMESTDV, stalls));
         }
         
         for( int i = 0; i < bake; i++){
-            marketStalls.add(addStall("fruit", FRUITTIME, FRUITTIMESTDV, stallCount));
-            stallCount++;
+            marketStalls.add(addStall("fruit", FRUITTIME, FRUITTIMESTDV, stalls));
         }
         
         for( int i = 0; i < bake; i++){
-            marketStalls.add(addStall("meat", MEATTIME, MEATTIMESTDV, stallCount));
-            stallCount++;
+            marketStalls.add(addStall("meat", MEATTIME, MEATTIMESTDV, stalls));
         }
         
         for( int i = 0; i < bake; i++){
-            marketStalls.add(addStall("vegetables", VEGETABLETIME, VEGETABLETIMESTDV, stallCount));
-            stallCount++;
+            marketStalls.add(addStall("vegetables", VEGETABLETIME, VEGETABLETIMESTDV, stalls));
         }
         
         return marketStalls;

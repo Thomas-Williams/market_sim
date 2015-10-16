@@ -2,4 +2,14 @@
 comment0.params=
 comment0.target=Line()
 comment0.text=\n\ Constructor\ for\ objects\ of\ class\ LineQueue\n
-numComments=1
+comment1.params=c
+comment1.target=boolean\ addCustomer(Customer)
+comment2.params=c
+comment2.target=boolean\ removeCustomer(Customer)
+comment3.params=
+comment3.target=int\ getLength()
+comment4.params=i
+comment4.target=Customer\ getCustomer(int)
+comment5.params=
+comment5.target=boolean\ emptyLine()
+numComments=6
