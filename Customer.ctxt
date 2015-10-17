@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=ID\ s
-comment0.target=Customer(int,\ java.util.LinkedList)
+comment0.params=ID\ t\ s
+comment0.target=Customer(int,\ int,\ java.util.LinkedList)
 comment0.text=\n\ Default\ constructor\ for\ the\ Customer\ class\n\ \n\ @param\ ID\ \ the\ unique\ identification\ number\ for\ an\ instance\ of\ the\ Customer\ class\n\ @param\ s\ \ the\ full\ list\ of\ stalla\ created\ at\ the\ market\ level.\n
 comment1.params=s
 comment1.target=void\ listGen(java.util.LinkedList)

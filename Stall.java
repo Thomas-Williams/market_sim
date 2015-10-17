@@ -9,9 +9,9 @@ import java.util.*;
 public class Stall
 {
     public String type;
-    private int stallID;
     private int SERVETIMEMEAN;
     private int SERVETIMESTDV;
+    int numberOfStalls;
     
     public LinkedList<Line> lines = new LinkedList<Line>();
     LinkedList workers = new LinkedList();
@@ -20,12 +20,12 @@ public class Stall
     /**
      * Constructor for objects of class Stall
      */
-    public Stall(String t, int s, int d, int i)
+    public Stall(String t, int n, int s, int d)
     {
         type = t;
+        numberOfStalls = n;
         SERVETIMEMEAN = s;
         SERVETIMESTDV = d;
-        stallID = i;
         
         Line line = new Line();
         lines.add(line);
@@ -34,6 +34,10 @@ public class Stall
         workers.add(worker0);
         Worker worker1 = new Worker();
         workers.add(worker1);
+        
+        if(numberOfStalls > 1){
+            addLines(numberOfStalls);
+        }
     }
     
     public void checkFront(int t)
@@ -53,23 +57,37 @@ public class Stall
                 ;
             } else if(multiLineCheck == 1){
                 if(lines.get(0).getCustomer(0).getServeTime() < lines.get(1).getCustomer(0).getServeTime()){
-                    System.out.println("Line 1 has the next customer");
+                    //System.out.println("Line 1 has the next customer");
                     nextDeparture += lines.get(0).getCustomer(0).getServeTime();
                     currentLine = 0;
                     serveCustomer(lines.get(currentLine).getCustomer(0));
                 } else {
-                    System.out.println("Line 2 has the next customer");
+                    //System.out.println("Line 2 has the next customer");
                     nextDeparture += lines.get(1).getCustomer(0).getServeTime();
                     currentLine = 1;
                     serveCustomer(lines.get(currentLine).getCustomer(0));
                 }
             } else {
-                System.out.println("Line 1 has the next customer");
+                //System.out.println("Line 1 has the next customer");
                 nextDeparture += lines.get(0).getCustomer(0).getServeTime();
                 currentLine = 0;
                 serveCustomer(lines.get(currentLine).getCustomer(0));
             }
             //System.out.println(nextDeparture);
+        }
+    }
+    
+    public void serveCustomer(Customer c)
+    {
+        Line currentLine;
+        for(int i = 0; i < lines.size(); i++){
+            currentLine = lines.get(i);
+            for(int j = 0; j < currentLine.getLength(); j++){
+                if(currentLine.getCustomer(j).equals(c)){
+                    //System.out.println("Serving a customer");
+                    c.fulfillNeed(type);
+                }
+            }
         }
     }
    
@@ -97,20 +115,6 @@ public class Stall
     public void serveTime(Customer c)
     {
         c.setServeTime((int) timeGen.getGaussian(SERVETIMEMEAN, SERVETIMESTDV));
-    }
-    
-    public void serveCustomer(Customer c)
-    {
-        Line currentLine;
-        for(int i = 0; i < lines.size(); i++){
-            currentLine = lines.get(i);
-            for(int j = 0; j < currentLine.getLength(); j++){
-                if(currentLine.getCustomer(j) == c){
-                    System.out.println("Serving a customer");
-                    c.fulfillNeed(type);
-                }
-            }
-        }
     }
     
     public Line findShortest()

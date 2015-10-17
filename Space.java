@@ -29,4 +29,16 @@ public class Space
         space = space - 15;
         return space;
     }
+    
+    public int addCustomer()
+    {
+        space = space - 1;
+        return space;
+    }
+    
+    public int addWorker()
+    {
+        space = space - 1;
+        return space;
+    }
 }

@@ -13,6 +13,7 @@ public class Customer {
     //The information directly associated with a given customer
     private int customerID;
     public int serveTime;
+    public int arrivalTime;
     private Stall currentStall;
     
     //The means and standard deviations for the liklyhood of a particulat stall needing to be visited
@@ -52,9 +53,10 @@ public class Customer {
      * @param ID  the unique identification number for an instance of the Customer class
      * @param s  the full list of stalla created at the market level.
      */
-    public Customer(int ID, LinkedList<Stall> s)
+    public Customer(int ID, int t, LinkedList<Stall> s)
     {
         customerID = ID;
+        arrivalTime = t;
         listGen(s);
         nextShortest();
     }
@@ -66,7 +68,7 @@ public class Customer {
      *  list of all the ones it needs to visit
      */
     public void listGen(LinkedList<Stall> s){
-        System.out.println("Generating list.");
+        //System.out.println("Generating list.");
         
         //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(BAKERYMEAN, BAKERYSTDV) > 50){
@@ -76,7 +78,7 @@ public class Customer {
             //Iterates through the list of all stalls to find the ones of the matching type and adds them to
             //the customers personal list.
             for(int i = 0; i < s.size(); i++){
-                if(s.get(i).type == "bakery"){
+                if(s.get(i).type.equals("bakery")){
                     stallsToVisit.add(s.get(i));
                 }
             }
@@ -92,7 +94,7 @@ public class Customer {
             //Iterates through the list of all stalls to find the ones of the matching type and adds them to
             //the customers personal list.
             for(int i = 0; i < s.size(); i++){
-                if(s.get(i).type == "beverage"){
+                if(s.get(i).type.equals("beverage")){
                     stallsToVisit.add(s.get(i));
                 }
             }
@@ -108,7 +110,7 @@ public class Customer {
             //Iterates through the list of all stalls to find the ones of the matching type and adds them to
             //the customers personal list.
             for(int i = 0; i < s.size(); i++){
-                if(s.get(i).type == "dairy"){
+                if(s.get(i).type.equals("dairy")){
                     stallsToVisit.add(s.get(i));
                 }
             }
@@ -124,7 +126,7 @@ public class Customer {
             //Iterates through the list of all stalls to find the ones of the matching type and adds them to
             //the customers personal list.
             for(int i = 0; i < s.size(); i++){
-                if(s.get(i).type == "fruit"){
+                if(s.get(i).type.equals("fruit")){
                     stallsToVisit.add(s.get(i));
                 }
             }
@@ -140,7 +142,7 @@ public class Customer {
             //Iterates through the list of all stalls to find the ones of the matching type and adds them to
             //the customers personal list.
             for(int i = 0; i < s.size(); i++){
-                if(s.get(i).type == "meat"){
+                if(s.get(i).type.equals("meat")){
                     stallsToVisit.add(s.get(i));
                 }
             }
@@ -156,7 +158,7 @@ public class Customer {
             //Iterates through the list of all stalls to find the ones of the matching type and adds them to
             //the customers personal list.
             for(int i = 0; i < s.size(); i++){
-                if(s.get(i).type == "vegetables"){
+                if(s.get(i).type.equals("vegetables")){
                     stallsToVisit.add(s.get(i));
                 }
             }
@@ -174,7 +176,7 @@ public class Customer {
     {
         Stall nextStall;
         Line shortestLine;
-        System.out.println("Finding the next shortest line");
+        //System.out.println("Finding the next shortest line");
         
         //Checks that there is in fact a stall left to visit
         if(stallsToVisit.isEmpty() != true){
@@ -203,12 +205,7 @@ public class Customer {
      */
     public boolean listComplete()
     {
-        if(stallsToVisit.isEmpty() == true){
-            System.out.println("List complete");
-            return true;
-        } else {
-            return false;
-        }
+        return stallsToVisit.isEmpty();
     }
 
     
@@ -220,31 +217,33 @@ public class Customer {
      */
     public void fulfillNeed(String n)
     {
-        System.out.println("Fulfilling a need");
+        //System.out.println("Fulfilling a need");
         
         //Checks if the input string matches this need
-        if(n == "bakery"){
+        if(n.equals("bakery")){
             shoppingList.remove("Bakery");
             fullNeeds.set(0, false);
             
             //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
             //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
-                if(stallsToVisit.get(i).type == "bakery"){
+                if(stallsToVisit.get(i).type.equals("bakery")){
                     this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
             
+
+           
         //Checks if the input string matches this need
-        } else if( n == "beverage"){
+        } else if(n.equals("beverage")){
             shoppingList.remove("Beverage");
             fullNeeds.set(1, false);
             
             //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
             //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
-                if(stallsToVisit.get(i).type == "beverage"){
+                if(stallsToVisit.get(i).type.equals("beverage")){
 
                     this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
@@ -252,56 +251,56 @@ public class Customer {
             }
             
         //Checks if the input string matches this need
-        } else if( n == "dairy"){
+        } else if(n.equals("dairy")){
             shoppingList.remove("Dairy");
             fullNeeds.set(2, false);
             
             //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
             //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
-                if(stallsToVisit.get(i).type == "dairy"){
+                if(stallsToVisit.get(i).type.equals("dairy")){
                     this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
             
         //Checks if the input string matches this need
-        } else if( n == "fruit"){
+        } else if(n.equals("fruit")){
             shoppingList.remove("Fruit");
             fullNeeds.set(3, false);
             
             //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
             //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
-                if(stallsToVisit.get(i).type == "fruit"){
+                if(stallsToVisit.get(i).type.equals("fruit")){
                     this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
             
         //Checks if the input string matches this need
-        } else if( n == "meat"){
+        } else if(n.equals("meat")){
             shoppingList.remove("Meat");
             fullNeeds.set(4, false);
             
             //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
             //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
-                if(stallsToVisit.get(i).type == "meat"){
+                if(stallsToVisit.get(i).type.equals("meat")){
                     this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
             
         //Checks if the input string matches this need
-        } else if( n == "vegetables"){
+        } else if(n.equals("vegetables")){
             shoppingList.remove("Vegetables");
             fullNeeds.set(5, false);
             
             //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
             //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
-                if(stallsToVisit.get(i).type == "vegetables"){
+                if(stallsToVisit.get(i).type.equals("vegetables")){
                     this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
@@ -341,7 +340,7 @@ public class Customer {
      */
     public Line moveLines(Line l)
     {
-        System.out.println("Moving lines");
+        //System.out.println("Moving lines");
         l.removeCustomer(this);
         nextShortest().addCustomer(this);
         return nextShortest();
@@ -355,7 +354,7 @@ public class Customer {
      */
     public Stall moveStall(Stall stall)
     {
-        System.out.println("Moving to the next stall");
+        //System.out.println("Moving to the next stall");
         currentStall = stall;
         currentStall.customerArrives(this);
         return currentStall;

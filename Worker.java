@@ -1,9 +1,9 @@
-
 /**
- * Write a description of class Worker here.
+ * Workers literally have no functionality in this program, they just take up space. All of this is
+ * controlled in higher classes.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Thomas Williams
+ * @version v1.0
  */
 public class Worker
 {

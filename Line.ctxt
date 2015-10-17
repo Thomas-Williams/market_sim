@@ -1,15 +1,20 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Line()
-comment0.text=\n\ Constructor\ for\ objects\ of\ class\ LineQueue\n
+comment0.text=\n\ The\ default\ constructor\ for\ a\ line.\ This\ just\ makes\ a\ LinkedList\ that\ customers\ will\ be\ added\ to\n
 comment1.params=c
 comment1.target=boolean\ addCustomer(Customer)
+comment1.text=\n\ Add\ a\ given\ customer\ to\ the\ line\ at\ the\ end\ of\ the\ line\n\ \n\ @param\ c\ \ the\ customer\ to\ be\ added\n\ @return\ \ if\ the\ if\ the\ customer\ was\ added\n
 comment2.params=c
 comment2.target=boolean\ removeCustomer(Customer)
+comment2.text=\n\ Removes\ a\ given\ customer\ from\ the\ line,\ independent\ of\ index\ of\ that\ customer\n\ \n\ @param\ c\ \ the\ customer\ to\ be\ removed\n\ @return\ if\ the\ customer\ was\ removed\ or\ not\n
 comment3.params=
 comment3.target=int\ getLength()
+comment3.text=\n\ Return\ the\ legnth\ of\ THIS\ instance\ of\ the\ line\ class\n\ \n\ @return\ \ the\ length\ of\ THIS\ line\n
 comment4.params=i
 comment4.target=Customer\ getCustomer(int)
+comment4.text=\n\ Retreives\ a\ customer\ at\ a\ specified\ index\n\ \n\ @param\ i\ \ the\ index\ to\ get\ a\ customer\ at\n\ @return\ \ the\ customer\ at\ the\ given\ index\n
 comment5.params=
 comment5.target=boolean\ emptyLine()
+comment5.text=\n\ Checks\ is\ the\ list\ of\ customers\ is\ empty\n\ \n\ @return\ is\ the\ list\ is\ empty\ or\ not\n
 numComments=6
