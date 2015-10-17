@@ -40,26 +40,36 @@ public class Stall
     {
         int nextDeparture  = 0;
         int currentLine = 0;
+        int multiLineCheck = 0;
         
-        if(lines.get(0).emptyLine() == true){
-            ;
-        } else if(lines.get(1).emptyLine() == true){
-            ;
-        } else if(lines.get(0).getCustomer(0).getServeTime() < lines.get(1).getCustomer(0).getServeTime()){
-            nextDeparture += lines.get(0).getCustomer(0).getServeTime();
-            currentLine = 0;
-        } else {
-            nextDeparture += lines.get(1).getCustomer(0).getServeTime();
-            currentLine = 1;
+        //System.out.println("Checking the lines in the " + type + " stall");
+        
+        if(lines.size() < 1){
+            multiLineCheck = 1;
         }
         
-        
-        if(lines.get(0).emptyLine() == true){
-            ;
-        } else if(lines.get(1).emptyLine() == true){
-            ;
-        } else if(t == nextDeparture){
-            serveCustomer(lines.get(currentLine).getCustomer(0));
+        for(int i = 0; i < lines.size(); i++){
+            if(lines.get(i).emptyLine() == true){
+                ;
+            } else if(multiLineCheck == 1){
+                if(lines.get(0).getCustomer(0).getServeTime() < lines.get(1).getCustomer(0).getServeTime()){
+                    System.out.println("Line 1 has the next customer");
+                    nextDeparture += lines.get(0).getCustomer(0).getServeTime();
+                    currentLine = 0;
+                    serveCustomer(lines.get(currentLine).getCustomer(0));
+                } else {
+                    System.out.println("Line 2 has the next customer");
+                    nextDeparture += lines.get(1).getCustomer(0).getServeTime();
+                    currentLine = 1;
+                    serveCustomer(lines.get(currentLine).getCustomer(0));
+                }
+            } else {
+                System.out.println("Line 1 has the next customer");
+                nextDeparture += lines.get(0).getCustomer(0).getServeTime();
+                currentLine = 0;
+                serveCustomer(lines.get(currentLine).getCustomer(0));
+            }
+            //System.out.println(nextDeparture);
         }
     }
    
@@ -96,9 +106,8 @@ public class Stall
             currentLine = lines.get(i);
             for(int j = 0; j < currentLine.getLength(); j++){
                 if(currentLine.getCustomer(j) == c){
+                    System.out.println("Serving a customer");
                     c.fulfillNeed(type);
-                    c.moveLines(c.nextShortest());
-                    currentLine.removeCustomer(c);
                 }
             }
         }

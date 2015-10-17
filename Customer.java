@@ -1,16 +1,21 @@
 import java.util.*;
 
 /**
- * Write a description of class Customer here.
+ * This class contains all the functions applicable to customers. It can generate a list of random needs based
+ * on the six pairs of variables that are defined on the class level. Customers are also capable of finding the
+ * next available shortest line within their list of needs, move themselves from line to line when a need is
+ * fulfilled, and return various information about themselves.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Thomas Williams 
+ * @version v1.0
  */
-public class Customer {   
+public class Customer {
+    //The information directly associated with a given customer
     private int customerID;
     public int serveTime;
-    private String currentStall;
+    private Stall currentStall;
     
+    //The means and standard deviations for the liklyhood of a particulat stall needing to be visited
     private final int BAKERYMEAN    = 37;
     private final int BAKERYSTDV    = 17;
     
@@ -29,21 +34,47 @@ public class Customer {
     private final int VEGETABLEMEAN = 71;
     private final int VEGETABLESTDV = 29;
     
+    //Instnace of the random number generator used throughout this project
     RandomGaussian needGen          = new RandomGaussian();
+    
+    /*The various ways needs are stored
+     * shoppingList is simply strings of the names of the stalls that need visiting
+     * fullNeeds is a boolean associated with every stall, true for needed, false for not
+     * stallsToVisit stored stall objects that are of the same type as the needs of the customer
+     */
     ArrayList shoppingList          = new ArrayList();
     ArrayList fullNeeds             = new ArrayList();
     ArrayList<Stall> stallsToVisit  = new ArrayList<Stall>();
     
-    public Customer(int ID)
+    /**
+     * Default constructor for the Customer class
+     * 
+     * @param ID  the unique identification number for an instance of the Customer class
+     * @param s  the full list of stalla created at the market level.
+     */
+    public Customer(int ID, LinkedList<Stall> s)
     {
         customerID = ID;
+        listGen(s);
+        nextShortest();
     }
     
+    /**
+     * Generates the list of needs based on the constants defined above.
+     * 
+     * @param s  the list of all stall generated at the market level used so they can be added to the customer's
+     *  list of all the ones it needs to visit
+     */
     public void listGen(LinkedList<Stall> s){
+        System.out.println("Generating list.");
+        
+        //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(BAKERYMEAN, BAKERYSTDV) > 50){
             shoppingList.add("Bakery");
             fullNeeds.add(true);
             
+            //Iterates through the list of all stalls to find the ones of the matching type and adds them to
+            //the customers personal list.
             for(int i = 0; i < s.size(); i++){
                 if(s.get(i).type == "bakery"){
                     stallsToVisit.add(s.get(i));
@@ -53,10 +84,13 @@ public class Customer {
             fullNeeds.add(false);
         }
         
+        //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(BEVERAGEMEAN, BEVERAGESTDV) > 50){
             shoppingList.add("Beverage");
             fullNeeds.add(true);
             
+            //Iterates through the list of all stalls to find the ones of the matching type and adds them to
+            //the customers personal list.
             for(int i = 0; i < s.size(); i++){
                 if(s.get(i).type == "beverage"){
                     stallsToVisit.add(s.get(i));
@@ -66,10 +100,13 @@ public class Customer {
             fullNeeds.add(false);
         }
         
+        //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(DAIRYMEAN, DAIRYSTDV) > 50){
             shoppingList.add("Dairy");
             fullNeeds.add(true);
             
+            //Iterates through the list of all stalls to find the ones of the matching type and adds them to
+            //the customers personal list.
             for(int i = 0; i < s.size(); i++){
                 if(s.get(i).type == "dairy"){
                     stallsToVisit.add(s.get(i));
@@ -79,10 +116,13 @@ public class Customer {
             fullNeeds.add(false);
         }
         
+        //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(FRUITMEAN, FRUITSTDV) > 50){
             shoppingList.add("Fruit");
             fullNeeds.add(true);
             
+            //Iterates through the list of all stalls to find the ones of the matching type and adds them to
+            //the customers personal list.
             for(int i = 0; i < s.size(); i++){
                 if(s.get(i).type == "fruit"){
                     stallsToVisit.add(s.get(i));
@@ -92,10 +132,13 @@ public class Customer {
             fullNeeds.add(false);
         }
         
+        //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(MEATMEAN, MEATSTDV) > 50){
             shoppingList.add("Meat");
             fullNeeds.add(true);
             
+            //Iterates through the list of all stalls to find the ones of the matching type and adds them to
+            //the customers personal list.
             for(int i = 0; i < s.size(); i++){
                 if(s.get(i).type == "meat"){
                     stallsToVisit.add(s.get(i));
@@ -105,10 +148,13 @@ public class Customer {
             fullNeeds.add(false);
         }
         
+        //Uses the results of a random number to check if a particular stall will be needed by this customer
         if(needGen.getGaussian(VEGETABLEMEAN, VEGETABLESTDV) > 50){
             shoppingList.add("Vegetables");
             fullNeeds.add(true);
             
+            //Iterates through the list of all stalls to find the ones of the matching type and adds them to
+            //the customers personal list.
             for(int i = 0; i < s.size(); i++){
                 if(s.get(i).type == "vegetables"){
                     stallsToVisit.add(s.get(i));
@@ -119,101 +165,207 @@ public class Customer {
         }
     }
     
+    /**
+     * Finds the next shortest line out of all the lines in all the stall currently in THIS customer's list
+     * 
+     * @return the next shortest available line or null if no more lines are available
+     */
     public Line nextShortest()
     {
-        Line shortestLine = stallsToVisit.get(0).findShortest();
-        for(int i = 1; i < stallsToVisit.size(); i++){
-            if(stallsToVisit.get(i).findShortest().getLength() < shortestLine.getLength()){
-                shortestLine = stallsToVisit.get(i).findShortest();
+        Stall nextStall;
+        Line shortestLine;
+        System.out.println("Finding the next shortest line");
+        
+        //Checks that there is in fact a stall left to visit
+        if(stallsToVisit.isEmpty() != true){
+            shortestLine = stallsToVisit.get(0).findShortest();
+            nextStall = stallsToVisit.get(0);
+            
+            //Iterates through the stall left in THIS customers list and compares them to find the shortest
+            for(int i = 0; i < stallsToVisit.size(); i++){
+                if(stallsToVisit.get(i).findShortest().getLength() < shortestLine.getLength()){
+                    shortestLine = stallsToVisit.get(i).findShortest();
+                    nextStall = stallsToVisit.get(i);
+                }
             }
+            moveStall(nextStall);
+            return shortestLine;
+        } else if(stallsToVisit.isEmpty() == true){
+            return null;
         }
-        return shortestLine;
+        return null;
     }
     
+    /**
+     * Checks if THIS customer has completed its list of needs
+     * 
+     * @return  a boolean value of it the needs have been filled or not
+     */
     public boolean listComplete()
     {
-        if(stallsToVisit.get(0) == null){
+        if(stallsToVisit.isEmpty() == true){
+            System.out.println("List complete");
             return true;
         } else {
             return false;
         }
     }
+
     
-    public void moveLines(Line l)
-    {
-        l.removeCustomer(this);
-        nextShortest().addCustomer(this);
-    }
-    
+    /**
+     * Compares a given string to the types of stalls in a customer's list to find which one matches and 
+     * remove it to "fulfill" that particular need.
+     * 
+     * @param n  the type of the stall that a need has been fulfilled from.
+     */
     public void fulfillNeed(String n)
     {
+        System.out.println("Fulfilling a need");
+        
+        //Checks if the input string matches this need
         if(n == "bakery"){
             shoppingList.remove("Bakery");
             fullNeeds.set(0, false);
+            
+            //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
+            //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
                 if(stallsToVisit.get(i).type == "bakery"){
+                    this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
+            
+        //Checks if the input string matches this need
         } else if( n == "beverage"){
             shoppingList.remove("Beverage");
             fullNeeds.set(1, false);
+            
+            //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
+            //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
                 if(stallsToVisit.get(i).type == "beverage"){
+
+                    this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
+            
+        //Checks if the input string matches this need
         } else if( n == "dairy"){
             shoppingList.remove("Dairy");
             fullNeeds.set(2, false);
+            
+            //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
+            //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
                 if(stallsToVisit.get(i).type == "dairy"){
+                    this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
+            
+        //Checks if the input string matches this need
         } else if( n == "fruit"){
             shoppingList.remove("Fruit");
             fullNeeds.set(3, false);
+            
+            //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
+            //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
                 if(stallsToVisit.get(i).type == "fruit"){
+                    this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
+            
+        //Checks if the input string matches this need
         } else if( n == "meat"){
             shoppingList.remove("Meat");
             fullNeeds.set(4, false);
+            
+            //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
+            //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
                 if(stallsToVisit.get(i).type == "meat"){
+                    this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
+            
+        //Checks if the input string matches this need
         } else if( n == "vegetables"){
             shoppingList.remove("Vegetables");
             fullNeeds.set(5, false);
+            
+            //Iterates through the stalls THIS customer needs to visit, finding the one that matches and
+            //removes it from the list and tells the customer to move to the next line
             for(int i = 0; i < stallsToVisit.size(); i++){
                 if(stallsToVisit.get(i).type == "vegetables"){
+                    this.moveLines(nextShortest());
                     stallsToVisit.remove(i);
                 }
             }
         }
     }
     
-    public void setServeTime(int t)
+    /**
+     * Simply set the serveTime of THIS customer to a randomly generated time for how long it will take for it to
+     *  be served at any given stall.
+     * 
+     * @param t  an integer passed in from the a stall that is set as the new serveTime
+     * @return an integer that stores the value of how long it will take to serve THIS customer 
+     */
+    public int setServeTime(int t)
     {
         serveTime = t;
+        return serveTime;
     }
     
+    /**
+     * Simply provides access to THIS customer's randomly generated time for how long it will take for it to be
+     *  served at any given stall.
+     * 
+     * @return  an integer that stores the value of how long it will take to serve THIS customer
+     */
     public int getServeTime()
     {
         return serveTime;
     }
-    
-    public String moveStall(String stall)
+        
+    /**
+     * Takes a line as input and moves THIS customer to it, returing the new line.
+     * 
+     * @param l the line that THIS customer will be moved to
+     * @return  the line that THIS customer was moved to 
+     */
+    public Line moveLines(Line l)
     {
+        System.out.println("Moving lines");
+        l.removeCustomer(this);
+        nextShortest().addCustomer(this);
+        return nextShortest();
+    }
+    
+    /**
+     * Takes a stall object as input and "moves" THIS customer to it, then return the stall it was moved to.
+     * 
+     * @param stall  the stall that THIS customer will be moved to
+     * @raturn  the stall that THIS customer was moved to
+     */
+    public Stall moveStall(Stall stall)
+    {
+        System.out.println("Moving to the next stall");
         currentStall = stall;
+        currentStall.customerArrives(this);
         return currentStall;
     }
     
+    /**
+     * Simply compiles informaiton about a customer in order to make it usable as output to the console.
+     * 
+     * @return the single string of all the infomration
+     */
     public String info()
     {
         String info =  "Customer: "           + customerID              + "\n";

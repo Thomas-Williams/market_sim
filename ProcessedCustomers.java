@@ -7,7 +7,7 @@
  */
 public class ProcessedCustomers
 {
-    private int processed = 0;
+    public int processed = 0;
 
     /**
      * Constructor for objects of class ProcessedCustomers
@@ -27,5 +27,10 @@ public class ProcessedCustomers
     {
         processed++;
         return processed;
+    }
+    
+    public void printSatisfied()
+    {
+        System.out.println(processed);
     }
 }

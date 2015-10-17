@@ -8,10 +8,10 @@ import java.util.*;
  */
 public class Market
 {
-    GlobalTime time                     = new GlobalTime();
-    LinkedList<Stall> marketStalls      = new LinkedList<Stall>();
-    LinkedList marketCustomers          = new LinkedList();
-    ProcessedCustomers satisfied        = new ProcessedCustomers();
+    GlobalTime time                       = new GlobalTime();
+    LinkedList<Stall> marketStalls        = new LinkedList<Stall>();
+    LinkedList<Customer> marketCustomers = new LinkedList<Customer>();
+    ProcessedCustomers satisfied          = new ProcessedCustomers();
     
     private final int ARRTIMEMEAN       = 61;
     private final int ARRTIMESTDV       = 31;
@@ -43,76 +43,69 @@ public class Market
     public List FatherTime()
     {
         int currentID    = 0;
-        int lastArrival  = 0;
         int nextArrival  = 0;
-        int currentIndex = 0;
         addAll(1, 1, 1, 1, 1, 1, 1);
-        nextArrival += arrivalTime.getGaussian(61, 31);
-        while(time.getTime() < 1000){
+        nextArrival += (int) arrivalTime.getGaussian(ARRTIMEMEAN, ARRTIMESTDV);
+        while(time.getTime() < 12600){
             if(time.getTime() == nextArrival){
-                Customer customer = new Customer(currentID);
+                Customer customer = new Customer(currentID, marketStalls);
+                customer.info();
                 marketCustomers.add(customer);
                 currentID++;
-                nextArrival += arrivalTime.getGaussian(61, 31);
-                time.addTime();
+                nextArrival += arrivalTime.getGaussian(ARRTIMEMEAN, ARRTIMESTDV);
             }
             
             
-            for(int i = 0; i < marketStalls.size(); i++){
-                marketStalls.get(i).checkFront(time.getTime());
-                for(int j = 0; j < marketStalls.get(i).lines.size(); j++){
-                    for(int k = 0; k < marketStalls.get(j).lines.size(); k++){
-                        if(marketStalls.get(i).lines.get(j).getCustomer(k).listComplete()
-                        if(marketStalls.get(i).lines.get(j).getCustomer(k).listComplete() == true){
-                            satisfied.addOne();
-                            marketStalls.get(i).lines.get(j).removeCustomer(marketStalls.get(i).lines.get(j).getCustomer(k));
-                        }
-                    }
+            for(int i = 0; i < marketCustomers.size(); i++){
+                if(marketCustomers.get(i).listComplete() == true){
+                    satisfied.addOne();
                 }
             }
-            
-            
             time.addTime();
         }
-        
+        //System.out.println(marketCustomers.size());
+        System.out.println(satisfied.processed);
         return marketCustomers;
     }
     
     public List addAll(int bake, int bev, int dairy, int fruit, int meat, int vegi, int stalls)
     {
+        System.out.println("Adding all stalls");
         for( int i = 0; i < bake; i++){
             marketStalls.add(addStall("bakery", BAKERYTIME, BAKERYTIMESTDV, stalls));
         }
         
-        for( int i = 0; i < bev; i++){
+        for( int j = 0; j < bev; j++){
             marketStalls.add(addStall("beverage", BEVERAGETIME, BEVERAGTETIMESTDV, stalls));
         }
         
-        for( int i = 0; i < bake; i++){
+        for( int k = 0; k < bake; k++){
             marketStalls.add(addStall("dairy", DAIRYTIME, DAIRYTIMESTDV, stalls));
         }
         
-        for( int i = 0; i < bake; i++){
+        for( int l = 0; l < bake; l++){
             marketStalls.add(addStall("fruit", FRUITTIME, FRUITTIMESTDV, stalls));
         }
         
-        for( int i = 0; i < bake; i++){
+        for( int m = 0; m < bake; m++){
             marketStalls.add(addStall("meat", MEATTIME, MEATTIMESTDV, stalls));
         }
         
-        for( int i = 0; i < bake; i++){
+        for( int n = 0; n < bake; n++){
             marketStalls.add(addStall("vegetables", VEGETABLETIME, VEGETABLETIMESTDV, stalls));
         }
-        
+        //for(int o = 0; o < marketStalls.size(); o++){
+        //    System.out.println(marketStalls.get(o).type);
+        //}
         return marketStalls;
     }
     
     public Customer addCustomer(int ID)
     {
-        Customer customer = new Customer(ID);
+        Customer customer = new Customer(ID, marketStalls);
         customer.listGen(marketStalls);
         
-        //customer.info();
+        customer.info();
         return customer;
     }
     

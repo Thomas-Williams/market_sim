@@ -7,7 +7,7 @@
  */
 public class GlobalTime
 {
-    private int time = 0;
+    public int time = 0;
 
     /**
      * Constructor for objects of class GlobalTime
