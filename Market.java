@@ -11,7 +11,7 @@ public class Market
 {
     //Instances of the 4 global variables used in the project
     GlobalTime           time            = new GlobalTime();
-    CsvWriter            output          = new CsvWriter();
+    CsvWriterInt            output       = new CsvWriterInt();
     Space                space           = new Space();
     ProcessedCustomers   satisfied       = new ProcessedCustomers();
     
@@ -44,6 +44,13 @@ public class Market
     //Instnace of the random number generator used throughout this project
     RandomGaussian arrivalTime           = new RandomGaussian();
     
+    double csfFileNumber;
+    
+    public Market(double csv)
+    {
+        csfFileNumber = csv;
+    }
+    
     /**
      * The main method for the whoel market. This is a big loop that counts up to the closing time of the 
      * market and calls the main functional methods of the stall and customer classes to actually 'run' the
@@ -63,7 +70,7 @@ public class Market
      * @param vegiL  the number of line for each vegetable stall
      * @return  Returns a list of all the customers left in the market at closing time.
      */
-    public List runSim(int b, int bL, int be, int beL, int d, int dL, int f, int fL, int m, int mL, int v, int vL)
+    public String runSim(int b, int bL, int be, int beL, int d, int dL, int f, int fL, int m, int mL, int v, int vL)
     {
         int currentID    = 0;
         int nextArrival  = 0;
@@ -101,7 +108,7 @@ public class Market
                                 marketCustomers.remove(marketStalls.get(j).lines.get(k).getCustomer(l));
                                 marketStalls.get(j).lines.get(k).removeCustomer(marketStalls.get(j).lines.get(k).getCustomer(l));
                                 satisfied.addOne();
-                                output.writeCsvFile(time.getTime(), 1);
+                                output.writeCsvFile(time.getTime(), csfFileNumber);
                             }
                         }
                     }
@@ -127,9 +134,8 @@ public class Market
                 satisfied.addOne();
             }
         }
-        
-        System.out.println(satisfied.processed);
-        return marketCustomers;
+        String out = "Total Customer: " + Integer.toString(currentID) + "\n Served: " + Integer.toString(satisfied.processed);
+        return out;
     }
     
     /**

@@ -12,9 +12,9 @@ public class Stall
 {
     //The 4 variables that define the crucial characteristics of a stall
     public String type;
-    private int SERVETIMEMEAN;
-    private int SERVETIMESTDV;
-    int numberOfStalls;
+    public int SERVETIMEMEAN;
+    public int SERVETIMESTDV;
+    public int numberOfLines;
     
     //This lists that store customers and workers
     public LinkedList<Line> lines = new LinkedList<Line>();
@@ -36,7 +36,7 @@ public class Stall
     {
         //Sets the stall defining values to the inputs
         type = t;
-        numberOfStalls = n;
+        numberOfLines = n;
         SERVETIMEMEAN = s;
         SERVETIMESTDV = d;
         
@@ -51,8 +51,8 @@ public class Stall
         workers.add(worker1);
         
         //Adds more lines and subsequent workers if n is greater than 1
-        if(numberOfStalls > 1){
-            addLines(numberOfStalls);
+        if(numberOfLines > 1){
+            addLines(numberOfLines);
         }
     }
     

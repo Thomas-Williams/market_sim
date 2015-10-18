@@ -5,9 +5,9 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.PrintWriter;
 
-public class CsvWriter {
+public class CsvWriterInt {
     private static final String NEW_LINE_SEPARATOR = "\n";
-    public static void writeCsvFile( int time, int fileNumber) {
+    public static void writeCsvFile( int time, double fileNumber) {
         String fileName = "Lproject_1_output" + fileNumber + ".csv";
         try {
             BufferedWriter output = new BufferedWriter( new FileWriter(fileName, true) );
