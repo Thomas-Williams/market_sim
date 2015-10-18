@@ -15,3 +15,6 @@ HOW TO START THIS PROJECT: To run a single instance of the simulation create and
 AUTHORS: Thomas Williams
 USER INSTRUCTIONS: If you would like to change the MEAN and STDV values used to generate the various times and needs of
                    customers, you can find them at the top of the Market class and the Customer Class.
+                   
+NOTE: Unit testing is a bit sparse. I simply ran out of time. I will however be adding the rest in no matter what, I would
+      love to get some feed back on it even though it cannot be calculated into my grade.

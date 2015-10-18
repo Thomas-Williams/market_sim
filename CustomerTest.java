@@ -41,7 +41,7 @@ public class CustomerTest
     }
     
     @Test
-    public void nextShortest()
+    public void nextShorTest()
     {
         Market marketForTesting = new Market(7.3);
         marketForTesting.addAll(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -49,14 +49,11 @@ public class CustomerTest
         Stall stall2 = new Stall("vegi", 1, 61, 31);
         stall1.addLines(1);
         Customer customer0 = new Customer(1, 1, marketForTesting.marketStalls);
-        Customer customer1 = new Customer(2, 2, marketForTesting.marketStalls);
-        Customer customer2 = new Customer(3, 3, marketForTesting.marketStalls);
         stall1.customerArrives(customer0);
-        assertEquals(1, stall1.lines.get(0).getLength());
-        stall1.customerArrives(customer1);
-        assertEquals(1, stall1.lines.get(1).getLength());
-        stall1.customerArrives(customer2);
-        assertNotSame(stall1.lines.get(0).getLength(), stall1.lines.get(1).getLength());
-        assertNotNull(stall1.findShortest());
+        assertNotNull(customer0.nextShortest());
+        assertEquals(stall2, customer0.moveStall(stall2));
+        assertEquals(4, customer0.setServeTime(4));
+        assertEquals(4, customer0.getServeTime());
     }
 }
+
