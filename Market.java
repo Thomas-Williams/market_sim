@@ -90,17 +90,44 @@ public class Market
             //Iterates through all the customers and checks if all their needs have been met, if so removes
             //them from the market and adds one to the global satisfaction counter and logs their time in
             //that merket to a CSV file.
-            for(int j = 0; j < marketCustomers.size(); j++){
-                if(marketCustomers.get(j).listComplete() == true){
-                    System.out.println("A customer is leaving");
-                    int timeInMarket = time.getTime() - marketCustomers.get(j).arrivalTime;
-                    marketCustomers.remove(marketCustomers.get(j));
-                    satisfied.addOne();
-                    output.writeCsvFile(time.getTime(), 1);
+            for(int j = 0; j < marketStalls.size(); j++){
+                for(int k = 0; k < marketStalls.get(j).lines.size(); k++){
+                    for(int l = 0; l < marketStalls.get(j).lines.get(k).getLength(); l++){
+                        if(marketStalls.get(j).lines.get(k).getCustomer(l).listComplete() == true){
+                            if(marketStalls.get(j).lines.get(k).emptyLine() == true){
+                                ;
+                            } else {
+                                int timeInMarket = time.getTime() - marketStalls.get(j).lines.get(k).getCustomer(l).arrivalTime;
+                                marketCustomers.remove(marketStalls.get(j).lines.get(k).getCustomer(l));
+                                marketStalls.get(j).lines.get(k).removeCustomer(marketStalls.get(j).lines.get(k).getCustomer(l));
+                                satisfied.addOne();
+                                output.writeCsvFile(time.getTime(), 1);
+                            }
+                        }
+                    }
                 }
             }
             time.addTime();
         }
+        
+        //Customers that are left in the market at closing will still be in the unified marketCustomers list, so
+        //by iterating through this it can be checked if their needs have been 50% filled at closing time
+        for(int o = 0; m < marketCustomers.size(); m++){
+            //Counter to keep track of filled needs per customer
+            int needCounter = 0;
+            
+            //Iterates through a customers needs, checking if they are still true or not
+            for(int n = 0; n < marketCustomers.get(m).fullNeeds.size(); n++){
+                if(marketCustomers.get(m).fullNeeds.get(n) == false){
+                    needCounter++;
+                }
+            }
+            //Checks is the counter it above half of the total possible needs
+            if(needCounter >= marketCustomers.get(m).stallsToVisit.size()){
+                satisfied.addOne();
+            }
+        }
+        
         System.out.println(satisfied.processed);
         return marketCustomers;
     }

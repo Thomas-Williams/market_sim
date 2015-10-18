@@ -1,18 +1,23 @@
 #BlueJ class context
 comment0.params=t\ n\ s\ d
 comment0.target=Stall(java.lang.String,\ int,\ int,\ int)
-comment0.text=\n\ Constructor\ for\ objects\ of\ class\ Stall\n
+comment0.text=\n\ The\ default\ constructor\ for\ a\ stall.\ Takes\ a\ type,\ number\ of\ lines,\ MEAN\ and\ STDV\ as\ inputs\ in\ order\ to\n\ make\ a\ stall.\n\ \n\ @param\ t\ \ a\ strong\ that\ represents\ what\ type\ of\ stall\ this\ will\ be\n\ @param\ n\ \ the\ number\ of\ lines\ this\ stall\ will\ contain.\n\ @param\ s\ \ the\ MEAN\ serve\ time\ for\ a\ stall\ of\ this\ type,\ used\ in\ the\ RNG\ for\ customrs\ wait\ time\n\ @param\ d\ the\ STDV\ of\ the\ serve\ time\ for\ a\ stall\ of\ this\ type,\ used\ in\ the\ RNG\ for\ customrs\ wait\ time\n
 comment1.params=t
 comment1.target=void\ checkFront(int)
+comment1.text=\n\ The\ main\ functional\ method\ of\ a\ stall,\ checks\ the\ front\ of\ any\ lines\ within\ the\ stall\ after\ making\ sure\n\ they\ are\ not\ empty,\ and\ then\ checks\n\ \n\ @param\ t\ \ a\ string\ that\ represents\ what\ type\ of\ stall\ this\ will\ be\n
 comment2.params=c
 comment2.target=void\ serveCustomer(Customer)
+comment2.text=\n\ The\ main\ functional\ method\ of\ a\ stall,\ checks\ the\ front\ of\ any\ lines\ within\ the\ stall\ after\ making\ sure\n\ they\ are\ not\ empty,\ and\ then\ checks\n\ \n\ @param\ t\ \ a\ strong\ that\ represents\ what\ type\ of\ stall\ this\ will\ be\n
 comment3.params=l
 comment3.target=void\ addLines(int)
-comment3.text=\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\n\ \n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\ \n
+comment3.text=\n\ Adds\ more\ lines\ to\ the\ stall\ based\ on\ a\ given\ amount,\ as\ well\ as\ the\ workers\ necessary\ for\ those\ lines\n\ \n\ @param\ l\ \ the\ number\ of\ line\ to\ add\n
 comment4.params=c
 comment4.target=void\ customerArrives(Customer)
+comment4.text=\n\ Customers\ always\ join\ the\ shortest\ line,\ so\ when\ a\ customer\ arrives\ this\ method\ directs\ that\ customer\ to\n\ the\ shortest\ line\ within\ the\ stall\n\ \n\ @param\ c\ \ the\ customer\ that\ is\ 'arriving'\ and\ will\ be\ placed\ in\ a\ line\n
 comment5.params=c
 comment5.target=void\ serveTime(Customer)
+comment5.text=\n\ Sets\ the\ the\ time\ it\ will\ take\ a\ given\ customer\ to\ be\ served\ once\ he/she\ is\ at\ the\ front\ of\ the\ line,\n\ using\ the\ MEAN\ and\ STDV\ value\ for\ this\ stall\ and\ the\ RNG\ used\ throughout\ the\ project\n\ \n\ @param\ c\ \ the\ customer\ whose\ serveTime\ time\ is\ being\ set\n
 comment6.params=
 comment6.target=Line\ findShortest()
+comment6.text=\n\ Finds\ the\ shortest\ line\ within\ the\ stall\n\ \n\ @return\ \ the\ line\ which\ has\ the\ shortest\ length\ in\ the\ stall\n
 numComments=7
